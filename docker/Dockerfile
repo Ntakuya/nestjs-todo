@@ -1,7 +1,10 @@
-FROM node:15
+FROM mysql:5.7
 
-WORKDIR /usr/src/app
+RUN apt-get update
+RUN apt-get -y install locales-all
 
-COPY package*.json ./
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
 
-RUN npm install
+COPY ./mysql/mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf

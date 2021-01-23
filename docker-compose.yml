@@ -4,7 +4,7 @@ services:
     container_name: todo_api
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/DockerfileApi
     tty: true
     restart: always
     env_file: .env
@@ -15,3 +15,18 @@ services:
       - type: bind
         source: .
         target: /usr/src/app
+    depends_on:
+      - db
+  db:
+    container_name: todo_db
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    tty: true
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
